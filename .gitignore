@@ -1,0 +1,8 @@
+/elpaca/
+/eshell/
+/builds/
+/auto-save-list/
+/recentf
+*.elc
+*.eld
+*~
