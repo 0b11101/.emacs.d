@@ -235,6 +235,8 @@
       "." '(find-file :wk "Find file")
       "f c" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :wk "Edit emacs config")
       "f r" '(counsel-recentf :wk "Find recent files")
+	"f u" '(sudo-edit-find-file :wk "Sudo find file")
+	"f U" '(sudo-edit :wk "Sudo edit file")
       "TAB TAB" '(comment-line :wk "Comment lines"))
 
     (jfl/leader-keys
@@ -444,6 +446,23 @@
 (use-package lsp-ivy
   :after lsp-mode 
   :commands lsp-ivy-workspace-symbol)
+
+;; Company Mode
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+(use-package sudo-edit)
 
 (use-package counsel-projectile
   :after projectile
