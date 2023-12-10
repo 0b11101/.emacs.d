@@ -1,8 +1,9 @@
+/auto-save-list/
+/builds/
 /elpaca/
 /eshell/
-/builds/
-/auto-save-list/
 /recentf
+/transient/
 *.elc
 *.eld
 *~
