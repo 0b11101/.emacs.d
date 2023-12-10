@@ -1,23 +1,13 @@
-#+title init.el org file
+#+TITLE init.el org file
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el
 #+STARTUP: overview  
 #+OPTIONS: toc:2
 
 Most of this is a combination of the [[https://youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ&si=FhhMVwPlshEyuNz2][System Crafters tutorial]] and [[https://youtube.com/playlist?list=PL5--8gKSku15e8lXf7aLICFmAHQVo0KXX&si=uQEZPtZAAqSFRPGi][DistroTube's tutorial]].
 None of this would have been remotely possible with out them.
-#+begin_src emacs-lisp
-;; Automatically tangle our Emacs.org config file when we save it
-(defun jfl/org-babel-tangle-config ()
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/.emacs.d/init.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jfl/org-babel-tangle-config)))
-#+end_src
 
 * Table of Contents :toc:
+- [[#auto-tangle][Auto Tangle]]
 - [[#basic-configuration][Basic Configuration]]
   - [[#emacs][Emacs]]
   - [[#font][FONT]]
@@ -50,6 +40,18 @@ None of this would have been remotely possible with out them.
   - [[#increase-text-size][Increase text size]]
   - [[#buffer-move][Buffer move]]
 
+* Auto Tangle
+#+begin_src emacs-lisp
+;; Automatically tangle our Emacs.org config file when we save it
+(defun jfl/org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "~/.emacs.d/init.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jfl/org-babel-tangle-config)))
+#+end_src
 * Basic Configuration
 ** Emacs
 #+begin_src emacs-lisp 
@@ -67,13 +69,25 @@ None of this would have been remotely possible with out them.
 
   ;; Remove line numbuers in the follwing
   (dolist (mode '(org-mode-hook
-  		term-mode-hook
-  		shell-mode-hook
-  		eshell-mode-hook))
+        		term-mode-hook
+        		shell-mode-hook
+        		eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
   ;; Ding-dong
   (setq visible-bell nil)
+
+  ;; TRANPARENCY!!
+  (set-frame-parameter (selected-frame) 'alpha '(90 85))
+
+  (add-to-list 'default-frame-alist '(alpha 85 85))
+
+  (set-face-attribute 'default nil
+                      :background "#423B2B"  ; your chosen hex color
+                      :foreground "#FFFFFF"  ; keeping white for the foreground
+                      :font "Courier"
+                      :height 180)
+
 #+end_src
 
 ** FONT

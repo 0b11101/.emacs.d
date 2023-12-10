@@ -22,13 +22,24 @@
 
 ;; Remove line numbuers in the follwing
 (dolist (mode '(org-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		eshell-mode-hook))
+      		term-mode-hook
+      		shell-mode-hook
+      		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Ding-dong
 (setq visible-bell nil)
+
+;; TRANPARENCY!!
+(set-frame-parameter (selected-frame) 'alpha '(90 85))
+
+(add-to-list 'default-frame-alist '(alpha 85 85))
+
+(set-face-attribute 'default nil
+                    :background "#423B2B"  ; your chosen hex color
+                    :foreground "#FFFFFF"  ; keeping white for the foreground
+                    :font "Courier"
+                    :height 180)
 
 ;; FONT
 (global-font-lock-mode t)
