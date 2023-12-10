@@ -3,8 +3,7 @@
 #+STARTUP: overview  
 #+OPTIONS: toc:2
 
-Most of this is a combination of the [[https://youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ&si=FhhMVwPlshEyuNz2][System Crafters tutorial] and [[https://youtube.com/playlist?list=PL5--8gKSku15e8lXf7aLICFmAHQVo0KXX&si=uQEZPtZAAqSFRPGi][DistroTube's tutorial].
-
+Most of this is a combination of the [[https://youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ&si=FhhMVwPlshEyuNz2][System Crafters tutorial]] and [[https://youtube.com/playlist?list=PL5--8gKSku15e8lXf7aLICFmAHQVo0KXX&si=uQEZPtZAAqSFRPGi][DistroTube's tutorial]].
 None of this would have been remotely possible with out them.
 #+begin_src emacs-lisp
 ;; Automatically tangle our Emacs.org config file when we save it
