@@ -421,6 +421,34 @@
 (use-package magit
   :commands (magit-status magit-git-current-branch))
 
+;; V-term
+(use-package vterm
+  :commands vterm
+  :config
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
+  (setq vterm-shell "/usr/local/bin/nu")                       ;; Set this to customize the shell to launch
+  (setq vterm-max-scrollback 10000))
+;; Vterm-toggle
+;; Source: https://gitlab.com/dwt1/configuring-emacs/-/blob/main/03-shells-terms-and-theming/config.org?ref_type=heads#vterm
+(use-package vterm-toggle
+:after vterm
+:config
+(setq vterm-toggle-fullscreen-p nil)
+(setq vterm-toggle-scope 'project)
+(add-to-list 'display-buffer-alist
+             '((lambda (buffer-or-name _)
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                (display-buffer-reuse-window display-buffer-at-bottom)
+                ;;(display-buffer-reuse-window display-buffer-in-direction)
+                ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                ;;(direction . bottom)
+                ;;(dedicated . t) ;dedicated is supported in emacs27
+                (reusable-frames . visible)
+                (window-height . 0.3))))
+
 (use-package lsp-mode
   :ensure t
   :init
