@@ -12,6 +12,12 @@
 (global-display-line-numbers-mode t)
 (global-auto-revert-mode t)
 (column-number-mode)
+(scroll-bar-mode -1)        ; Disable visible scrollbar
+(tool-bar-mode -1)          ; Disable the toolbar
+(tooltip-mode -1)           ; Disable tooltips
+(set-fringe-mode 10)        ; Give some breathing room
+
+(menu-bar-mode -1)            ; Disable the menu bar
 ;; Enables relative line numbers globally
 (setq display-line-numbers-type 'relative)
 
@@ -22,9 +28,9 @@
 
 ;; Remove line numbuers in the follwing
 (dolist (mode '(org-mode-hook
-      		term-mode-hook
-      		shell-mode-hook
-      		eshell-mode-hook))
+        	term-mode-hook
+        	shell-mode-hook
+        	eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Ding-dong
@@ -36,7 +42,7 @@
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
 (set-face-attribute 'default nil
-                    :background "#423B2B"  ; your chosen hex color
+                    :background "#0F0B0E"  ; your chosen hex color
                     :foreground "#FFFFFF"  ; keeping white for the foreground
                     :font "Courier"
                     :height 180)
@@ -405,7 +411,7 @@
   (doom-modeline-mode 1)  ;; Enable Doom Modeline
   :config
   (custom-set-faces
-  '(mode-line ((t (:family "Gravitas One" :height 1.3))))
+  '(mode-line ((t (:family "Gravitas One" :height 1.1))))
   '(mode-line-active ((t (:family "Gravitas One" :height 1.0)))) ; For 29+
   '(mode-line-inactive ((t (:family "Gravitas One" :height 1.0)))))
   (setq nerd-icons-scale-factor 1.3))
@@ -460,6 +466,12 @@
                 (reusable-frames . visible)
                 (window-height . 0.3))))
 
+(use-package omnisharp
+  :after (company lsp-mode)
+  :config
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-to-list 'company-backends 'company-omnisharp))
+
 (use-package lsp-mode
   :ensure t
   :init
@@ -469,22 +481,32 @@
          (ruby-mode . lsp)
          (haskell-mode . lsp)
          (rust-mode . lsp)
-         (csharp-mode . lsp)
+         (csharp-mode . lsp)    ;; Ensure lsp is started for C#
          (sh-mode . lsp)        ;; For shell scripts
          (python-mode . lsp)
          (julia-mode . lsp)
          ;; If you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
-  ;; LSP UI tools
- (use-package lsp-ui
-   :after lsp-mode
-   :commands lsp-ui-mode)
 
-;; Ivy integration with LSP
-(use-package lsp-ivy
-  :after lsp-mode 
-  :commands lsp-ivy-workspace-symbol)
+;; Configure lsp-mode to use OmniSharp as the language server for C#
+(use-package lsp-omnisharp
+  :ensure t
+  :after lsp-mode
+  :config
+  (setq lsp-omnisharp-server-path "path-to-omnisharp-server") ;; Specify the path to the OmniSharp server
+  ;; Add more configuration here if needed
+  )
+ 
+  ;; LSP UI tools
+  (use-package lsp-ui
+    :after lsp-mode
+    :commands lsp-ui-mode)
+
+  ;; Ivy integration with LSP
+  (use-package lsp-ivy
+    :after lsp-mode 
+    :commands lsp-ivy-workspace-symbol)
 
 ;; Company Mode
 (use-package company
