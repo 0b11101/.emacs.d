@@ -466,12 +466,6 @@
                 (reusable-frames . visible)
                 (window-height . 0.3))))
 
-(use-package omnisharp
-  :after (company lsp-mode)
-  :config
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-to-list 'company-backends 'company-omnisharp))
-
 (use-package lsp-mode
   :ensure t
   :init
@@ -489,24 +483,22 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
-;; Configure lsp-mode to use OmniSharp as the language server for C#
-(use-package lsp-omnisharp
-  :ensure t
-  :after lsp-mode
+(use-package omnisharp
+  :after (company lsp-mode)
+  :hook (csharp-mode . omnisharp-mode)
   :config
-  (setq lsp-omnisharp-server-path "path-to-omnisharp-server") ;; Specify the path to the OmniSharp server
-  ;; Add more configuration here if needed
-  )
- 
-  ;; LSP UI tools
-  (use-package lsp-ui
-    :after lsp-mode
-    :commands lsp-ui-mode)
+  (add-to-list 'company-backends 'company-omnisharp))
 
-  ;; Ivy integration with LSP
-  (use-package lsp-ivy
-    :after lsp-mode 
-    :commands lsp-ivy-workspace-symbol)
+
+;; LSP UI tools
+(use-package lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode)
+
+;; Ivy integration with LSP
+(use-package lsp-ivy
+  :after lsp-mode 
+  :commands lsp-ivy-workspace-symbol)
 
 ;; Company Mode
 (use-package company

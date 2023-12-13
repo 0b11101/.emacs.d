@@ -575,38 +575,30 @@ Second block
 #+end_src
 ** Language Server Protocols
 #+begin_src emacs-lisp
-(use-package omnisharp
-  :after (company lsp-mode)
-  :config
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-to-list 'company-backends 'company-omnisharp))
+  (use-package lsp-mode
+    :ensure t
+    :init
+    ;; Set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; Add major modes for LSP
+           (ruby-mode . lsp)
+           (haskell-mode . lsp)
+           (rust-mode . lsp)
+           (csharp-mode . lsp)    ;; Ensure lsp is started for C#
+           (sh-mode . lsp)        ;; For shell scripts
+           (python-mode . lsp)
+           (julia-mode . lsp)
+           ;; If you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
 
-(use-package lsp-mode
-  :ensure t
-  :init
-  ;; Set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; Add major modes for LSP
-         (ruby-mode . lsp)
-         (haskell-mode . lsp)
-         (rust-mode . lsp)
-         (csharp-mode . lsp)    ;; Ensure lsp is started for C#
-         (sh-mode . lsp)        ;; For shell scripts
-         (python-mode . lsp)
-         (julia-mode . lsp)
-         ;; If you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  (use-package omnisharp
+    :after (company lsp-mode)
+    :hook (csharp-mode . omnisharp-mode)
+    :config
+    (add-to-list 'company-backends 'company-omnisharp))
 
-;; Configure lsp-mode to use OmniSharp as the language server for C#
-(use-package lsp-omnisharp
-  :ensure t
-  :after lsp-mode
-  :config
-  (setq lsp-omnisharp-server-path "path-to-omnisharp-server") ;; Specify the path to the OmniSharp server
-  ;; Add more configuration here if needed
-  )
- 
+
   ;; LSP UI tools
   (use-package lsp-ui
     :after lsp-mode
