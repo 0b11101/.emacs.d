@@ -31,6 +31,7 @@ None of this would have been remotely possible with out them.
   - [[#terminal][Terminal]]
   - [[#language-server-protocols][Language Server Protocols]]
   - [[#company-mode][Company Mode]]
+  - [[#latex][LaTeX]]
   - [[#sudo-edit][Sudo Edit]]
 - [[#packages-2][Packages]]
   - [[#counsel-projectile][Counsel-Projectile]]
@@ -609,6 +610,7 @@ Second block
     :after lsp-mode 
     :commands lsp-ivy-workspace-symbol)
 #+end_src
+
 ** Company Mode
 #+begin_src emacs-lisp
     ;; Company Mode
@@ -626,6 +628,9 @@ Second block
   (use-package company-box
     :hook (company-mode . company-box-mode))
 #+end_src
+
+** LaTeX
+Planning to add in some LaTeX support
 ** Sudo Edit
 #+begin_src emacs-lisp
   (use-package sudo-edit)
