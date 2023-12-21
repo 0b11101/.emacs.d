@@ -516,7 +516,8 @@
   :hook (company-mode . company-box-mode))
 
 ;; LaTeX
-  (use-package auctex
+;; Assuming you have AUCTeX installed
+(use-package auctex
   :ensure t
   :mode ("\\.tex\\'" . LaTeX-mode)
   :hook ((LaTeX-mode . turn-on-reftex)  ; Enable RefTeX with AUCTeX LaTeX mode
@@ -535,13 +536,9 @@
   ;; Enable PDF mode by default
   (setq TeX-PDF-mode t))
 
-;; Optional: RefTeX settings for better management of bibliographies
-(use-package reftex
-  :ensure t
-  :after auctex
-  :config
-  (setq reftex-plug-into-AUCTeX t)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))  ; with AUCTeX LaTeX mode
+;; RefTeX settings for both AUCTeX LaTeX mode and Emacs latex mode
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
+(add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
 
 (use-package sudo-edit)
 
