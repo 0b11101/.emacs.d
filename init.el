@@ -515,6 +515,34 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+;; LaTeX
+  (use-package auctex
+  :ensure t
+  :mode ("\\.tex\\'" . LaTeX-mode)
+  :hook ((LaTeX-mode . turn-on-reftex)  ; Enable RefTeX with AUCTeX LaTeX mode
+         (LaTeX-mode . company-mode))   ; Enable company-mode in LaTeX-mode
+  :config
+  ;; AUCTeX configurations
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)  ; Query for master file
+
+  ;; Indentation settings, adjust as needed
+  (setq LaTeX-indent-level 4)
+  (setq LaTeX-item-indent 0)
+  (setq TeX-brace-indent-level 4)
+
+  ;; Enable PDF mode by default
+  (setq TeX-PDF-mode t))
+
+;; Optional: RefTeX settings for better management of bibliographies
+(use-package reftex
+  :ensure t
+  :after auctex
+  :config
+  (setq reftex-plug-into-AUCTeX t)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))  ; with AUCTeX LaTeX mode
+
 (use-package sudo-edit)
 
 (use-package counsel-projectile
